@@ -1,0 +1,22 @@
+{
+    "presets": [
+        "@babel/preset-env"
+    ],
+    "plugins": [
+        [
+            "inline-import",
+            {
+                "extensions": [
+                    ".yml"
+                ]
+            }
+        ],
+        "@babel/plugin-transform-runtime",
+        [
+            "module-resolver",
+            {
+                "root": "./src"
+            }
+        ]
+    ]
+}

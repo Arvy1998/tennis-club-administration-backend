@@ -1,0 +1,30 @@
+{
+    "parser": "babel-eslint",
+    "extends": "airbnb-base",
+    "parserOptions": {
+        "sourceType": "module",
+        "codeFrame": true
+    },
+    "rules": {
+        "no-underscore-dangle": [
+            "error",
+            {
+                "allow": [
+                    "_id"
+                ]
+            }
+        ]
+    },
+    "plugins": [
+        "import"
+    ],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "paths": [
+                    "src"
+                ]
+            }
+        }
+    }
+}
