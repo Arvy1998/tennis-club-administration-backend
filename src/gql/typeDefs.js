@@ -1,7 +1,9 @@
-import { gql } from 'apollo-server';
+import gql from 'graphql-tag';
 
 const typeDefs = gql`
     scalar DateTime
+
+    directive @isAdmin on FIELD_DEFINITION
 
     enum UserRole {
         PLAYER
@@ -22,6 +24,7 @@ const typeDefs = gql`
     }
 
     type User {
+        id: ID!
         firstName: String
         lastName: String
         email: String!
@@ -42,6 +45,7 @@ const typeDefs = gql`
     }
 
     type Badge {
+        id: ID!
         title: String
         description: String
         badgeIconFile: File
@@ -50,6 +54,7 @@ const typeDefs = gql`
     }
 
     type Club {
+        id: ID!
         title: String
         description: String
         creator: User
@@ -59,6 +64,7 @@ const typeDefs = gql`
     }
 
     type File {
+        id: ID!
         fileName: String
         mime: String
         size: Float
@@ -68,6 +74,7 @@ const typeDefs = gql`
     }
 
     type Game {
+        id: ID!
         date: DateTime
         result: ResultType
         scores: [Score]
@@ -76,6 +83,7 @@ const typeDefs = gql`
     }
 
     type Reservation {
+        id: ID!
         startDateTime: DateTime
         duration: Int
         user: User
@@ -88,6 +96,7 @@ const typeDefs = gql`
     }
 
     type Score {
+        id: ID!
         scoreNumber: Int
         numberOfWins: Int
         numberOfLoses: Int
@@ -129,12 +138,13 @@ const typeDefs = gql`
         # user related queries
         getUser(email: String!): User
         getUsers(query: UserQueryInput!): [User]
+        allUsers: [User]! @isAdmin
     }
 
     type Mutation {
         # user related mutations
         loginUser(userInput: UserInput!): User
-        registerUser(userInput: UserInput!): User
+        registerUser(userInput: UserInput!): String
 
         editUser(email: String!, userInput: UserInput!): User
         deleteUser(email: String!): User

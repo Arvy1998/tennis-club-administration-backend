@@ -1,9 +1,15 @@
+require('dotenv').config();
+
 import Badge from 'models/Badge';
 import Club from 'models/Club';
 import Reservation from 'models/Reservations';
 import Game from 'models/Game';
 import User from 'models/User';
 import File from 'models/File';
+
+import bcrypt from 'bcrypt';
+
+import signToken from 'utils/signToken';
 
 const resolvers = {
   User: {
@@ -62,10 +68,15 @@ const resolvers = {
   },
   Query: {
     /* user related queries */
-    getUser: async (parent, args) => {
+    getUser: async (parent, args, { user }) => {
+        const userToReturn = await User.findOne({ email: args.email });
+        console.log({ user });
+        return userToReturn;
+    },
+    getUsers: async (parent, args, { user }) => {
 
     },
-    getUsers: async (parent, args) => {
+    allUsers: async (parent, args, { user }) => {
 
     },
   },
@@ -75,12 +86,17 @@ const resolvers = {
 
     },
     registerUser: async (parent, args) => {
+      const newUser = await User.create(args.userInput);
+      const token = await signToken(newUser);
+
+      console.log({newUser});
+
+      return token;
+    },
+    editUser: async (parent, args, { user }) => {
 
     },
-    editUser: async (parent, args) => {
-
-    },
-    deleteUser: async (parent, args) => {
+    deleteUser: async (parent, args, { user }) => {
 
     },
   },

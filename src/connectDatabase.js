@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+require('dotenv').config();
 
-const MONGO_URI = 'mongodb+srv://admin:4QCLheCcbipmmKoC@cluster0.aqqsq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+import mongoose from 'mongoose';
 
 const options = {
   useNewUrlParser: true,
@@ -8,7 +8,7 @@ const options = {
   useUnifiedTopology: true,
 };
 
-const mongoUrl = MONGO_URI || 'mongodb://localhost:27017';
+const mongoUrl = process.env.MONGO_URI || 'mongodb://localhost:27017';
 
 const connectDatabase = () => {
   mongoose.connect(mongoUrl, options);
