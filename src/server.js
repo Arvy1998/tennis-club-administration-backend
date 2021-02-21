@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+import fs from 'fs';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { ApolloServer, } from 'apollo-server-express';
@@ -14,23 +15,20 @@ import cors from 'cors';
 import IsAdminDirective from 'directives/isAdmin';
 
 import connectDatabase from 'connectDatabase';
-import verifyToken from './utils/verifyToken';
 
 /* connect to the mongoDB */
 connectDatabase();
 
 /* auth layer */
 const auth = jwt({
-    secret: jwks.expressJwtSecret({
-        cache: true,
-        rateLimit: true,
-        jwksRequestsPerMinute: 5,
-        jwksUri: `${process.env.AUTH0_ISSUER}.well-known/jwks.json`,
-    }),
-    audience: process.env.AUTH0_AUDIENCE,
-    issuer: process.env.AUTH0_ISSUER,
+    secret: fs.readFileSync(`${__dirname}/ssl/service.key`),
+    algorithms: ['HS256'],
     credentialsRequired: false,
-    algorithms: ['RS256'],
+    getToken: (request) => {
+        if (request.headers.authorization && request.headers.authorization.split(' ')[0] === 'Bearer') {
+            return request.headers.authorization.split(' ')[1];
+        } return null;
+    }
 });
 
 /* create our express app */
@@ -53,10 +51,11 @@ const server = new ApolloServer({
         isAdmin: IsAdminDirective,
     },
     context: async ({ request }) => {
-        console.log({ request });
-        return { user: await verifyToken(request) };
+        return { user: request ? request.user : null };
     },
 })
+
+// TODO: GENERATE NEW RSA KEYS
 
 server.applyMiddleware({ app, path: '/graphql' });
 
