@@ -1,4 +1,6 @@
-require('dotenv').config();
+import DuplicateUser from 'errors/DuplicateUser';
+import UserDoesNotExist from 'errors/UserDoesNotExist';
+import PasswordsMissmatch from 'errors/PasswordsMissmatch';
 
 import Badge from 'models/Badge';
 import Club from 'models/Club';
@@ -10,6 +12,8 @@ import File from 'models/File';
 import bcrypt from 'bcrypt';
 
 import signToken from 'utils/signToken';
+
+require('dotenv').config();
 
 const resolvers = {
   User: {
@@ -69,9 +73,9 @@ const resolvers = {
   Query: {
     /* user related queries */
     getUser: async (parent, args, { user }) => {
-        const userToReturn = await User.findOne({ email: args.email });
-        console.log({ user });
-        return userToReturn;
+      const userToReturn = await User.findOne({ email: args.email });
+      console.log({ user });
+      return userToReturn;
     },
     getUsers: async (parent, args, { user }) => {
 
@@ -83,13 +87,38 @@ const resolvers = {
   Mutation: {
     /* user related mutations */
     loginUser: async (parent, args) => {
+      const userWithHash = await User.findOne({ email: args.userInput.email });
+      if (!userWithHash) {
+        throw new UserDoesNotExist();
+      }
 
+      const match = new Promise((resolve, reject) => {
+        bcrypt.compare(args.userInput.password, userWithHash.password, (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        });
+      });
+
+      if (!(await match)) {
+        throw new PasswordsMissmatch();
+      }
+
+      const token = await signToken(userWithHash);
+      return token;
     },
     registerUser: async (parent, args) => {
-      const newUser = await User.create(args.userInput);
-      const token = await signToken(newUser);
+      const existingUser = await User.findOne({ email: args.userInput.email });
+      if (existingUser) {
+        throw new DuplicateUser();
+      }
 
-      console.log({newUser});
+      /* encrypt password before saving it to the mongo database */
+      const passwordHash = await bcrypt.hash(args.userInput.password, 10);
+      const userToRegister = args.userInput;
+      userToRegister.password = passwordHash;
+
+      const newUser = await User.create(userToRegister);
+      const token = await signToken(newUser);
 
       return token;
     },

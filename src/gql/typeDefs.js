@@ -143,7 +143,7 @@ const typeDefs = gql`
 
     type Mutation {
         # user related mutations
-        loginUser(userInput: UserInput!): User
+        loginUser(userInput: UserInput!): String
         registerUser(userInput: UserInput!): String
 
         editUser(email: String!, userInput: UserInput!): User

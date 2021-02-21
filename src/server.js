@@ -1,9 +1,7 @@
-require('dotenv').config();
-
 import fs from 'fs';
 import express from 'express';
 import bodyParser from 'body-parser';
-import { ApolloServer, } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 
 import typeDefs from 'gql/typeDefs';
 import resolvers from 'gql/resolvers';
@@ -15,20 +13,23 @@ import cors from 'cors';
 import IsAdminDirective from 'directives/isAdmin';
 
 import connectDatabase from 'connectDatabase';
+import verifyToken from './utils/verifyToken';
+
+require('dotenv').config();
 
 /* connect to the mongoDB */
 connectDatabase();
 
 /* auth layer */
 const auth = jwt({
-    secret: fs.readFileSync(`${__dirname}/ssl/service.key`),
-    algorithms: ['HS256'],
-    credentialsRequired: false,
-    getToken: (request) => {
-        if (request.headers.authorization && request.headers.authorization.split(' ')[0] === 'Bearer') {
-            return request.headers.authorization.split(' ')[1];
-        } return null;
-    }
+  secret: fs.readFileSync(`${__dirname}/ssl/service.key`),
+  algorithms: ['HS256'],
+  credentialsRequired: false,
+  getToken: (request) => {
+    if (request.headers.authorization && request.headers.authorization.split(' ')[0] === 'Bearer') {
+      return request.headers.authorization.split(' ')[1];
+    } return null;
+  },
 });
 
 /* create our express app */
@@ -45,22 +46,18 @@ app.use(cors());
 app.use('/graphql', auth);
 
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    schemaDirectives: {
-        isAdmin: IsAdminDirective,
-    },
-    context: async ({ request }) => {
-        return { user: request ? request.user : null };
-    },
-})
-
-// TODO: GENERATE NEW RSA KEYS
+  typeDefs,
+  resolvers,
+  schemaDirectives: {
+    isAdmin: IsAdminDirective,
+  },
+  context: async ({ req }) => ({ user: await verifyToken(req) }),
+});
 
 server.applyMiddleware({ app, path: '/graphql' });
 
 app.use((request, response) => {
-    response.status(404).send({ message: 'Not found' });
+  response.status(404).send({ message: 'Not found' });
 });
 
 app.listen(process.env.PORT, () => console.log(`listening on port ${process.env.PORT}`));

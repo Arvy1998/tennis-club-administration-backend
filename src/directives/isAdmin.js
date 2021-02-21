@@ -2,7 +2,7 @@ import { SchemaDirectiveVisitor } from 'apollo-server-express';
 import { defaultFieldResolver } from 'graphql';
 
 class IsAdminDirective extends SchemaDirectiveVisitor {
-  visitFieldDefinition (field) {
+  visitFieldDefinition(field) {
     const { resolve = defaultFieldResolver } = field;
 
     field.resolve = async function (...args) {
@@ -18,8 +18,8 @@ class IsAdminDirective extends SchemaDirectiveVisitor {
       }
 
       return resolve.apply(this, args);
-    }
+    };
   }
 }
 
-module.exports = IsAdminDirective
+module.exports = IsAdminDirective;

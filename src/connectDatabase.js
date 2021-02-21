@@ -1,6 +1,6 @@
-require('dotenv').config();
-
 import mongoose from 'mongoose';
+
+require('dotenv').config();
 
 const options = {
   useNewUrlParser: true,
