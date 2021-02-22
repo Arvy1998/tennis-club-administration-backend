@@ -7,7 +7,6 @@ import typeDefs from 'gql/typeDefs';
 import resolvers from 'gql/resolvers';
 
 import jwt from 'express-jwt';
-import jwks from 'jwks-rsa';
 import cors from 'cors';
 
 import IsAdminDirective from 'directives/isAdmin';
