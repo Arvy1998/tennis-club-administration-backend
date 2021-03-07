@@ -8,9 +8,7 @@ const verifyToken = async (request) => {
 
   const token = request.headers.authorization;
 
-  console.log({ token });
-
-  if (!token) throw new UserNotAuthorized();
+  if (!token) return null;
 
   return new Promise((resolve) => {
     jwt.verify(token.split(' ')[1], privatekey, (error, user) => {
