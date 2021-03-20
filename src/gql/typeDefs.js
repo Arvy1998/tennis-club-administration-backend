@@ -118,6 +118,7 @@ const typeDefs = gql`
         id: ID
         firstName: String
         lastName: String
+        sex: UserGender
         email: String
         role: UserRole
         level: Float
