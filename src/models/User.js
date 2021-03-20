@@ -17,6 +17,14 @@ const userSchema = new mongoose.Schema({
       'ADMIN',
     ],
   },
+  sex: {
+    type: String,
+    enum: [
+      'MALE',
+      'FEMALE',
+      'OTHER',
+    ],
+  },
   level: { type: Number },
   address: { type: String },
   city: { type: String },

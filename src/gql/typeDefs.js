@@ -23,10 +23,17 @@ const typeDefs = gql`
         YEAR
     }
 
+    enum UserGender {
+        MALE
+        FEMALE
+        OTHER
+    }
+
     type User {
         id: ID!
         firstName: String
         lastName: String
+        sex: UserGender
         email: String!
         role: UserRole
         level: Float
