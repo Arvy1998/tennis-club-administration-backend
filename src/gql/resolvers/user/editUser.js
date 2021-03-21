@@ -39,6 +39,10 @@ const editUser = async (parent, args, { user }) => {
 
     const passwordHash = await bcrypt.hash(userToEdit.newPassword, 10);
     userToEdit.password = passwordHash;
+    
+    if (userToEdit.newEmail) {
+      userToEdit.email = newEmail;
+    }
   }
 
   const editedUser = await User.findOneAndUpdate(
