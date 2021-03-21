@@ -20,7 +20,13 @@ const registerUser = async (parent, args) => {
   const newUser = await User.create(userToRegister);
   const token = await signToken(newUser);
 
-  return token;
+  let user = newUser;
+  delete user.password;
+
+  return {
+    token,
+    ...user.toObject(),
+  };
 };
 
 export default registerUser;

@@ -25,7 +25,14 @@ const loginUser = async (parent, args) => {
   }
 
   const token = await signToken(userWithHash);
-  return token;
+
+  let user = userWithHash;
+  delete user.password;
+
+  return {
+    token,
+    ...user.toObject(),
+  };
 };
 
 export default loginUser;

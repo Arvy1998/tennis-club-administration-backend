@@ -41,7 +41,7 @@ const editUser = async (parent, args, { user }) => {
     userToEdit.password = passwordHash;
     
     if (userToEdit.newEmail) {
-      userToEdit.email = newEmail;
+      userToEdit.email = userToEdit.newEmail;
     }
   }
 

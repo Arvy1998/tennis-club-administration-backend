@@ -63,6 +63,7 @@ const typeDefs = gql`
         userProfileFile: File
         createdAt: DateTime
         updatedAt: DateTime
+        token: String
     }
 
     type Badge {
@@ -167,8 +168,8 @@ const typeDefs = gql`
 
     type Mutation {
         # user related mutations
-        loginUser(userInput: UserInput!): String
-        registerUser(userInput: UserInput!): String
+        loginUser(userInput: UserInput!): User
+        registerUser(userInput: UserInput!): User
 
         editUser(email: String!, userInput: UserInput!): User
         deleteUser(email: String!): User
