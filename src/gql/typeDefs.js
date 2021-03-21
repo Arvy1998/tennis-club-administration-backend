@@ -29,6 +29,20 @@ const typeDefs = gql`
         OTHER
     }
 
+    enum UserLevel {
+        LEVEL_1_5
+        LEVEL_2_0
+        LEVEL_2_5
+        LEVEL_3_0
+        LEVEL_3_5
+        LEVEL_4_0
+        LEVEL_4_5
+        LEVEL_5_0
+        LEVEL_5_5
+        LEVEL_6_0_7_0
+        LEVEL_7_0
+    }
+
     type User {
         id: ID!
         firstName: String
@@ -36,7 +50,7 @@ const typeDefs = gql`
         sex: UserGender
         email: String!
         role: UserRole
-        level: Float
+        level: UserLevel
         address: String
         city: String
         phoneNumber: String
