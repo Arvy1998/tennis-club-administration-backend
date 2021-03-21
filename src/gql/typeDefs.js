@@ -126,6 +126,7 @@ const typeDefs = gql`
         city: String
         phoneNumber: String
         password: String
+        newPassword: String
         badges: [ID]
         clubId: ID
         reservationIds: [ID]

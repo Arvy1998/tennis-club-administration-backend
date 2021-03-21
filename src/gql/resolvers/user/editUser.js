@@ -1,4 +1,6 @@
 import UserNotAuthorized from 'errors/UserNotAuthorized';
+import UserDoesNotExist from 'errors/UserDoesNotExist';
+import PasswordsMissmatch from 'errors/PasswordsMissmatch';
 
 import User from 'models/User';
 
@@ -13,8 +15,29 @@ const editUser = async (parent, args, { user }) => {
     throw new UserNotAuthorized();
   }
 
+  const userWithHash = await User.findOne({ email: args.userInput.email });
+  if (!userWithHash) {
+    throw new UserDoesNotExist();
+  }
+
   /* mongoDB can update fields when null or undefined passed */
   userToEdit = filterNotDefinedFields(userToEdit);
+
+  if (userToEdit.newPassword && userToEdit.password) {
+    const match = new Promise((resolve, reject) => {
+      bcrypt.compare(args.userInput.password, userWithHash.password, (error, result) => {
+        if (error) reject(error);
+        else resolve(result);
+      });
+    });
+
+    if (!(await match)) {
+      throw new PasswordsMissmatch();
+    }
+
+    const passwordHash = await bcrypt.hash(userToEdit.newPassword, 10);
+    userToEdit.password = passwordHash;
+  }
 
   const editedUser = await User.findOneAndUpdate(
     { email: args.email },
