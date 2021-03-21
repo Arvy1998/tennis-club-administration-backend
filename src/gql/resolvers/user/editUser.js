@@ -4,6 +4,8 @@ import PasswordsMissmatch from 'errors/PasswordsMissmatch';
 
 import User from 'models/User';
 
+import bcrypt from 'bcrypt';
+
 import filterNotDefinedFields from 'utils/filterNotDefinedFields';
 
 const editUser = async (parent, args, { user }) => {
