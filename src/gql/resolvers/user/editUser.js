@@ -23,6 +23,8 @@ const editUser = async (parent, args, { user }) => {
   }
 
   /* mongoDB can update fields when null or undefined passed */
+  const genderOption = userToEdit.sex;
+
   userToEdit = filterNotDefinedFields(userToEdit);
 
   if (userToEdit.newPassword && userToEdit.password) {
@@ -39,7 +41,7 @@ const editUser = async (parent, args, { user }) => {
 
     const passwordHash = await bcrypt.hash(userToEdit.newPassword, 10);
     userToEdit.password = passwordHash;
-    
+
     if (userToEdit.newEmail) {
       userToEdit.email = userToEdit.newEmail;
     }
@@ -47,7 +49,10 @@ const editUser = async (parent, args, { user }) => {
 
   const editedUser = await User.findOneAndUpdate(
     { email: args.email },
-    userToEdit,
+    {
+      ...userToEdit,
+      sex: genderOption,
+    },
     { new: true },
   );
 
