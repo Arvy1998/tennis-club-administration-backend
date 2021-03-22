@@ -24,6 +24,7 @@ const editUser = async (parent, args, { user }) => {
 
   /* mongoDB can update fields when null or undefined passed */
   const genderOption = userToEdit.sex;
+  const levelOption = userToEdit.level;
 
   userToEdit = filterNotDefinedFields(userToEdit);
 
@@ -52,6 +53,7 @@ const editUser = async (parent, args, { user }) => {
     {
       ...userToEdit,
       sex: genderOption,
+      level: levelOption,
     },
     { new: true },
   );
