@@ -136,7 +136,7 @@ const typeDefs = gql`
         sex: UserGender
         email: String
         role: UserRole
-        level: Float
+        level: UserLevel
         address: String
         city: String
         phoneNumber: String
