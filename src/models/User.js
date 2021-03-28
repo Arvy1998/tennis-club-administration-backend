@@ -51,7 +51,7 @@ const userSchema = new mongoose.Schema({
   reservationIds: { type: [String], index: true },
   gameIds: { type: [String], index: true },
   friendIds: { type: [String], index: true },
-  userProfileFileId: { type: String, index: true },
+  userProfilePhoto: String,
   /* historization fields */
   createdAt: { type: Date },
   updatedAt: { type: Date },

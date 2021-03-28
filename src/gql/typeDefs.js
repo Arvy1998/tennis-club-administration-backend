@@ -60,7 +60,7 @@ const typeDefs = gql`
         reservations: [Reservation]
         games: [Game]
         friends: [User]
-        userProfileFile: File
+        userProfilePhoto: String
         createdAt: DateTime
         updatedAt: DateTime
         token: String
@@ -70,7 +70,7 @@ const typeDefs = gql`
         id: ID!
         title: String
         description: String
-        badgeIconFile: File
+        badgeIcon: String
         createdAt: DateTime
         updatedAt: DateTime
     }
@@ -80,17 +80,7 @@ const typeDefs = gql`
         title: String
         description: String
         creator: User
-        clubLogoFile: File
-        createdAt: DateTime
-        updatedAt: DateTime
-    }
-
-    type File {
-        id: ID!
-        fileName: String
-        mime: String
-        size: Float
-        user: User
+        clubLogo: String
         createdAt: DateTime
         updatedAt: DateTime
     }
@@ -129,6 +119,26 @@ const typeDefs = gql`
         updatedAt: DateTime
     }
 
+    type PlayField {
+        is: ID!
+        title: String
+        address: String
+        cost: Float
+        ownerPhoneNumber: String
+        ownerEmailAddress: String
+        photoBuffer: String
+        courtsNumber: Int
+        courtType: String
+        courtFloorType: String
+        additionalInformation: String
+        webpage: String
+        workHours: String
+        rating: Int
+
+        createdAt: DateTime
+        updatedAt: DateTime
+    }
+
     input UserInput {
         id: ID
         firstName: String
@@ -148,7 +158,7 @@ const typeDefs = gql`
         reservationIds: [ID]
         gameIds: [ID]
         friendIds: [ID]
-        userProfileFile: ID
+        userProfilePhoto: String
     }
 
     input UserQueryInput {

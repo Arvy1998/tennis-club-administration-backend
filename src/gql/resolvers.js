@@ -3,7 +3,6 @@ import Club from 'models/Club';
 import Reservation from 'models/Reservations';
 import Game from 'models/Game';
 import User from 'models/User';
-import File from 'models/File';
 
 /* authorization and user */
 import loginUser from './resolvers/authorization/loginUser';
@@ -62,11 +61,8 @@ const resolvers = {
 
       return friends;
     },
-    userProfileFile: async (parent, args) => {
-      if (parent.userProfileFileId) {
-        const file = await File.findById(parent.userProfileFileId);
-        return file;
-      } return null;
+    userProfilePhoto: async (parent, args) => {
+      return null;
     },
   },
   Query: {
@@ -75,8 +71,9 @@ const resolvers = {
     getUsers: async (parent, args, { user }) => {
 
     },
-    allUsers: async (parent, args, { user }) => {
-
+    allUsers: async () => {
+      const users = await User.find();
+      return users;
     },
   },
   Mutation: {

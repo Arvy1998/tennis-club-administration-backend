@@ -3,8 +3,7 @@ import mongoose from 'mongoose';
 const badgeSchema = new mongoose.Schema({
   title: { type: String },
   description: { type: String },
-  /* mongo database relational fields for apollo federation */
-  badgeIconFileId: { type: String, index: true },
+  badgeIcon: String,
   /* historization fields */
   createdAt: { type: Date },
   updatedAt: { type: Date },

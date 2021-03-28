@@ -5,7 +5,7 @@ const clubSchema = new mongoose.Schema({
   description: { type: String },
   /* mongo database relational fields for apollo federation */
   creatorId: { type: String, index: true },
-  clubLogoFileId: { type: String, index: true },
+  clubLogo: String,
   /* historization fields */
   createdAt: { type: Date },
   updatedAt: { type: Date },
