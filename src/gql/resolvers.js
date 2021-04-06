@@ -61,9 +61,6 @@ const resolvers = {
 
       return friends;
     },
-    userProfilePhoto: async (parent, args) => {
-      return null;
-    },
   },
   Query: {
     /* user related queries */
