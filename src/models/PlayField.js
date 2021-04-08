@@ -6,15 +6,17 @@ const playFieldSchema = new mongoose.Schema({
   cost: Number,
   ownerPhoneNumber: String,
   ownerEmailAddress: String,
-  photoBuffer: String,
   courtsNumber: Number,
   courtType: String,
   courtFloorType: String,
+  city: String,
 
   additionalInformation: String,
   webpage: String,
   workHours: String,
   rating: Number,
+
+  playFieldPhoto: String,
 
   /* historization fields */
   createdAt: { type: Date },

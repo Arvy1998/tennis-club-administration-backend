@@ -120,7 +120,7 @@ const typeDefs = gql`
     }
 
     type PlayField {
-        is: ID!
+        id: ID!
         title: String
         address: String
         cost: Float
@@ -169,11 +169,42 @@ const typeDefs = gql`
         gameId: ID
     }
 
+    input PlayFieldInput {
+        id: ID
+        title: String
+        address: String
+        cost: Float
+        ownerPhoneNumber: String
+        ownerEmailAddress: String
+        courtsNumber: Int
+        courtType: String
+        courtFloorType: String
+        additionalInformation: String
+        webpage: String
+        workHours: String
+        rating: Int
+        playFieldPhoto: String
+        city: String
+    }
+
+    input PlayFieldQueryInput {
+        courtsNumber: Int
+        courtType: String
+        courtFloorType: String
+        city: String
+        rating: Int
+        cost: Float
+    }
+
     type Query {
         # user related queries
         getUser(email: String!): User
         getUsers(query: UserQueryInput!): [User]
         allUsers: [User]! @isAdmin
+
+        # playfields related queries
+        getPlayField(id: ID!): PlayField
+        listPlayFields(playFieldQueryInput: PlayFieldQueryInput): [PlayField]
     }
 
     type Mutation {
@@ -183,6 +214,11 @@ const typeDefs = gql`
 
         editUser(email: String!, userInput: UserInput!): User
         deleteUser(email: String!): User
+
+        # playfield related mutations
+        createPlayField(playFieldInput: PlayFieldInput!): PlayField
+        updatePlayField(id: ID!, playFieldInput: PlayFieldInput!): PlayField
+        deletePlayField(id: ID!): PlayField
     }
 `;
 

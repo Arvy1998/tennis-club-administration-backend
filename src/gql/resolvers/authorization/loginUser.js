@@ -26,7 +26,7 @@ const loginUser = async (parent, args) => {
 
   const token = await signToken(userWithHash);
 
-  let user = userWithHash;
+  const user = userWithHash;
   delete user.password;
 
   return {

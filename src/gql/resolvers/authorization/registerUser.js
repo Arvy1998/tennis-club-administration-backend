@@ -20,7 +20,7 @@ const registerUser = async (parent, args) => {
   const newUser = await User.create(userToRegister);
   const token = await signToken(newUser);
 
-  let user = newUser;
+  const user = newUser;
   delete user.password;
 
   return {

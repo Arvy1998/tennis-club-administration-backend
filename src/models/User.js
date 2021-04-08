@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
       'OTHER',
     ],
   },
-  level: { 
+  level: {
     type: String,
     enum: [
       'LEVEL_1_5',
