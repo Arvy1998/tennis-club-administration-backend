@@ -196,6 +196,16 @@ const typeDefs = gql`
         cost: Float
     }
 
+    input ReservationInput {
+        startDateTime: DateTime
+        duration: Int
+        userId: String
+        isRecurring: Boolean
+        recurringDate: DateTime
+        recurringPeriod: RecurringPeriod
+        recurringEvery: Int
+    }
+
     type Query {
         # user related queries
         getUser(email: String!): User
@@ -219,6 +229,11 @@ const typeDefs = gql`
         createPlayField(playFieldInput: PlayFieldInput!): PlayField
         updatePlayField(id: ID!, playFieldInput: PlayFieldInput!): PlayField
         deletePlayField(id: ID!): PlayField
+
+        # reservation related mutations
+        createReservation(reservationInput: ReservationInput!): Reservation
+        updateReservation(id: ID!, reservationInput: ReservationInput!): Reservation
+        deleteReservation(id: ID!): Reservation
     }
 `;
 
