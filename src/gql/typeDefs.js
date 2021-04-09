@@ -126,7 +126,6 @@ const typeDefs = gql`
         cost: Float
         ownerPhoneNumber: String
         ownerEmailAddress: String
-        photoBuffer: String
         courtsNumber: Int
         courtType: String
         courtFloorType: String

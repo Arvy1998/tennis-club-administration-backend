@@ -7,7 +7,7 @@ import filterNotDefinedFields from 'utils/filterNotDefinedFields';
 
 const updatePlayField = async (parent, args, { user }) => {
   const playFieldToEdit = args.playFieldInput;
-  const userForAuthorization = await User.findOne({ email: args.email });
+  const userForAuthorization = await User.findOne({ email: user.email });
 
   /* only allow editing user if it's not another user */
   if (user.userId !== userForAuthorization._id.toString()) {
