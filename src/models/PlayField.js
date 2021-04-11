@@ -13,7 +13,6 @@ const playFieldSchema = new mongoose.Schema({
 
   additionalInformation: String,
   webpage: String,
-  workHours: String,
   rating: Number,
 
   playFieldPhoto: String,

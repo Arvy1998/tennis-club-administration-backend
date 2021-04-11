@@ -35,7 +35,7 @@ const auth = jwt({
 const app = express();
 
 /* required by OpenAPI-Express */
-const jsonBodyParser = bodyParser.json({});
+const jsonBodyParser = bodyParser.json({ limit: '50mb' });
 app.use(jsonBodyParser);
 
 /* enable CORS */

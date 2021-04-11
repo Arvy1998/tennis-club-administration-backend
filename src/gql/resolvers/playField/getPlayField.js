@@ -11,7 +11,7 @@ const getPlayField = async (parent, args, { user }) => {
     throw new UserNotAuthorized();
   }
 
-  const playFieldToReturn = await PlayField.findOne({ id: args.id });
+  const playFieldToReturn = await PlayField.findOne({ _id: args.id });
   return playFieldToReturn;
 };
 

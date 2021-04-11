@@ -15,6 +15,7 @@ import createPlayField from './resolvers/playField/createPlayField';
 import updatePlayField from './resolvers/playField/updatePlayField';
 import getPlayField from './resolvers/playField/getPlayField';
 import listPlayFields from './resolvers/playField/listPlayFields';
+import deletePlayField from './resolvers/playField/deletePlayField';
 
 require('dotenv').config();
 

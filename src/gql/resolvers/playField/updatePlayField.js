@@ -15,7 +15,7 @@ const updatePlayField = async (parent, args, { user }) => {
   }
 
   const updatedPlayField = await PlayField.findOneAndUpdate(
-    { id: args.id },
+    { _id: args.id },
     filterNotDefinedFields(playFieldToEdit),
     { new: true },
   );

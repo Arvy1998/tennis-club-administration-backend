@@ -12,7 +12,7 @@ const deleteUser = async (parent, args, { user }) => {
   }
 
   const deletedPlayField = await PlayField.findOneAndDelete({
-    id: args.id,
+    _id: args.id,
   });
 
   return deletedPlayField;

@@ -131,8 +131,10 @@ const typeDefs = gql`
         courtFloorType: String
         additionalInformation: String
         webpage: String
-        workHours: String
-        rating: Int
+        rating: Float
+        city: String
+
+        playFieldPhoto: String
 
         createdAt: DateTime
         updatedAt: DateTime
@@ -180,8 +182,7 @@ const typeDefs = gql`
         courtFloorType: String
         additionalInformation: String
         webpage: String
-        workHours: String
-        rating: Int
+        rating: Float
         playFieldPhoto: String
         city: String
     }
@@ -191,7 +192,7 @@ const typeDefs = gql`
         courtType: String
         courtFloorType: String
         city: String
-        rating: Int
+        rating: Float
         cost: Float
     }
 
