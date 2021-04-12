@@ -3,8 +3,6 @@ import gql from 'graphql-tag';
 const typeDefs = gql`
     scalar DateTime
 
-    directive @isAdmin on FIELD_DEFINITION
-
     enum UserRole {
         PLAYER
         TRENNER
@@ -85,11 +83,22 @@ const typeDefs = gql`
         updatedAt: DateTime
     }
 
+    type Match {
+        firstTeamScore: Int
+        secondTeamScore: Int
+    }
+
     type Game {
         id: ID!
-        date: DateTime
-        result: ResultType
-        scores: [Score]
+        date: DateTime!
+        
+        firstTeamFirstPlayer: User
+        firstTeamSecondPlayer: User
+        secondTeamFirstPlayer: User
+        secondTeamSecondPlayer: User
+
+        matches: [Match]
+
         createdAt: DateTime
         updatedAt: DateTime
     }
@@ -103,18 +112,6 @@ const typeDefs = gql`
         recurringDate: DateTime
         recurringPeriod: RecurringPeriod
         recurringEvery: Int
-        createdAt: DateTime
-        updatedAt: DateTime
-    }
-
-    type Score {
-        id: ID!
-        scoreNumber: Int
-        numberOfWins: Int
-        numberOfLoses: Int
-        scoreMultiplier: Float
-        game: Game
-        opponents: [User]
         createdAt: DateTime
         updatedAt: DateTime
     }
@@ -206,15 +203,36 @@ const typeDefs = gql`
         recurringEvery: Int
     }
 
+    input MatchInput {
+        firstTeamScore: Int
+        secondTeamScore: Int
+    }
+
+    input GameInput {
+        date: DateTime!
+
+        matches: [MatchInput]
+        
+        firstTeamFirstPlayerId: ID!
+        firstTeamSecondPlayerId: ID
+        secondTeamFirstPlayerId: ID!
+        secondTeamSecondPlayerId: ID
+    }
+
     type Query {
         # user related queries
         getUser(email: String!): User
-        getUsers(query: UserQueryInput!): [User]
-        allUsers: [User]! @isAdmin
+        allUsers: [User]!
 
         # playfields related queries
         getPlayField(id: ID!): PlayField
         listPlayFields(playFieldQueryInput: PlayFieldQueryInput): [PlayField]
+
+        # reservations related queries
+
+        # games related queries
+        getGame(id: ID!): Game
+        listGames: [Game]
     }
 
     type Mutation {
@@ -234,6 +252,11 @@ const typeDefs = gql`
         createReservation(reservationInput: ReservationInput!): Reservation
         updateReservation(id: ID!, reservationInput: ReservationInput!): Reservation
         deleteReservation(id: ID!): Reservation
+
+        # game related mutations
+        createGame(gameInput: GameInput!): Game
+        updateGame(id: ID!, gameInput: GameInput!): Game
+        deleteGame(id: ID!): Game 
     }
 `;
 

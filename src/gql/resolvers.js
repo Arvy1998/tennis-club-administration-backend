@@ -5,7 +5,7 @@ import Game from 'models/Game';
 import User from 'models/User';
 import PlayField from '../models/PlayField';
 
-/* authorization and user */
+/* authorization and user, resolver operations */
 import loginUser from './resolvers/authorization/loginUser';
 import registerUser from './resolvers/authorization/registerUser';
 import getUser from './resolvers/user/getUser';
@@ -16,6 +16,11 @@ import updatePlayField from './resolvers/playField/updatePlayField';
 import getPlayField from './resolvers/playField/getPlayField';
 import listPlayFields from './resolvers/playField/listPlayFields';
 import deletePlayField from './resolvers/playField/deletePlayField';
+import createGame from './resolvers/game/createGame';
+import updateGame from './resolvers/game/updateGame';
+import getGame from './resolvers/game/getGame';
+import listGames from './resolvers/game/listGames';
+import deleteGame from './resolvers/game/deleteGame';
 
 require('dotenv').config();
 
@@ -50,22 +55,16 @@ const resolvers = {
       return reservations;
     },
     games: async (parent, args) => {
-      const games = [];
-      await Promise.all(parent.gameIds.map(async (gameId) => {
-        const game = await Game.findById(gameId);
-        games.push(game);
-      }));
+      const games = await Game.find();
 
-      return games;
-    },
-    friends: async (parent, args) => {
-      const friends = [];
-      await Promise.all(parent.friendIds.map(async (friendId) => {
-        const friend = await User.findById(friendId);
-        friends.push(friend);
-      }));
+      const userGames = games.filter(game => 
+        game.firstTeamFirstPlayerId === parent.id ||
+        game.firstTeamSecondPlayerId === parent.id ||
+        game.secondTeamFirstPlayerId === parent.id ||
+        game.secondTeamSecondPlayerId === parent.id
+      )
 
-      return friends;
+      return userGames;
     },
   },
   PlayField: {
@@ -74,12 +73,27 @@ const resolvers = {
       return playField;
     },
   },
+  Game: {
+    firstTeamFirstPlayer: async (parent, args) => {
+      const user = await User.findOne({ _id: parent.firstTeamFirstPlayerId });
+      return user;
+    },
+    firstTeamSecondPlayer: async (parent, args) => {
+      const user = await User.findOne({ _id: parent.firstTeamSecondPlayerId });
+      return user;
+    },
+    secondTeamFirstPlayer: async (parent, args) => {
+      const user = await User.findOne({ _id: parent.secondTeamFirstPlayerId });
+      return user;
+    },
+    secondTeamSecondPlayer: async (parent, args) => {
+      const user = await User.findOne({ _id: parent.secondTeamSecondPlayerId });
+      return user;
+    },
+  },
   Query: {
     /* user related queries */
     getUser: async (parent, args, context) => getUser(parent, args, context),
-    getUsers: async (parent, args, { user }) => {
-
-    },
     allUsers: async () => {
       const users = await User.find();
       return users;
@@ -87,6 +101,10 @@ const resolvers = {
     /* playfield related queries */
     getPlayField: async (parent, args, context) => getPlayField(parent, args, context),
     listPlayFields: async (parent, args, context) => listPlayFields(parent, args, context),
+    /* reservations related queries */
+    /* games related queries */
+    getGame: async (parent, args, context) => getGame(parent, args, context),
+    listGames: async (parent, args, context) => listGames(parent, args, context),
   },
   Mutation: {
     /* user related mutations */
@@ -98,6 +116,11 @@ const resolvers = {
     createPlayField: async (parent, args, context) => createPlayField(parent, args, context),
     updatePlayField: async (parent, args, context) => updatePlayField(parent, args, context),
     deletePlayField: async (parent, args, context) => deletePlayField(parent, args, context),
+    /* reservations related mutations */
+    /* games related mutations */
+    createGame: async (parent, args, context) => createGame(parent, args, context),
+    updateGame: async (parent, args, context) => updateGame(parent, args, context),
+    deleteGame: async (parent, args, context) => deleteGame(parent, args, context),
   },
 };
 

@@ -9,8 +9,6 @@ import resolvers from 'gql/resolvers';
 import jwt from 'express-jwt';
 import cors from 'cors';
 
-import IsAdminDirective from 'directives/isAdmin';
-
 import connectDatabase from 'connectDatabase';
 import verifyToken from './utils/verifyToken';
 
@@ -47,9 +45,6 @@ app.use('/graphql', auth);
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  schemaDirectives: {
-    isAdmin: IsAdminDirective,
-  },
   context: async ({ req }) => ({ user: await verifyToken(req) }),
 });
 

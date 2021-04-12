@@ -45,13 +45,15 @@ const userSchema = new mongoose.Schema({
   city: { type: String },
   phoneNumber: { type: String },
   password: { type: String },
+
   /* mongo database relational fields for apollo federation */
-  badgeIds: { type: [String], index: true },
   clubId: { type: String, index: true },
-  reservationIds: { type: [String], index: true },
-  gameIds: { type: [String], index: true },
-  friendIds: { type: [String], index: true },
+
   userProfilePhoto: String,
+
+  /* used for achievements and level */
+  rating: Number,
+
   /* historization fields */
   createdAt: { type: Date },
   updatedAt: { type: Date },
