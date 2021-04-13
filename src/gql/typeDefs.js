@@ -222,7 +222,7 @@ const typeDefs = gql`
     type Query {
         # user related queries
         getUser(email: String!): User
-        allUsers: [User]!
+        allUsers: [User]
 
         # playfields related queries
         getPlayField(id: ID!): PlayField
