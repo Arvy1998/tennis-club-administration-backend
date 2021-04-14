@@ -40,7 +40,7 @@ const createGame = async (parent, args, { user }) => {
     }
 
     let firstTeamSecondPlayer = await User.findOne({ _id: gameToEdit.firstTeamSecondPlayerId });
-    if (!firstTeamSecondPlayer.rating) {
+    if (firstTeamSecondPlayer && !firstTeamSecondPlayer.rating) {
         firstTeamSecondPlayerRating = 0;
     } else if (firstTeamSecondPlayer && firstTeamSecondPlayer.rating) {
         firstTeamSecondPlayerRating = firstTeamSecondPlayer.rating + firstTeamsScore;
@@ -54,7 +54,7 @@ const createGame = async (parent, args, { user }) => {
     }
 
     let secondTeamSecondPlayer = await User.findOne({ _id: gameToEdit.secondTeamSecondPlayerId });
-    if (!secondTeamSecondPlayer.rating) {
+    if (secondTeamSecondPlayer && !secondTeamSecondPlayer.rating) {
         secondTeamSecondPlayerRating = 0;
     } else if (secondTeamSecondPlayer && secondTeamSecondPlayer.rating) {
         secondTeamSecondPlayerRating = secondTeamSecondPlayer + secondTeamsScore;
@@ -91,6 +91,7 @@ const createGame = async (parent, args, { user }) => {
     gameToEdit.date = new Date();
 
     const newGame = await Game.create(filterNotDefinedFields(gameToEdit));
+    console.log({newGame});
     return newGame;
 };
 

@@ -209,8 +209,6 @@ const typeDefs = gql`
     }
 
     input GameInput {
-        date: DateTime!
-
         matches: [MatchInput]
         
         firstTeamFirstPlayerId: ID!
