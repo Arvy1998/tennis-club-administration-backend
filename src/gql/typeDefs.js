@@ -62,6 +62,9 @@ const typeDefs = gql`
         createdAt: DateTime
         updatedAt: DateTime
         token: String
+        mainHand: String
+        details: String
+        rating: Int
     }
 
     type Badge {
@@ -157,6 +160,8 @@ const typeDefs = gql`
         gameIds: [ID]
         friendIds: [ID]
         userProfilePhoto: String
+        mainHand: String
+        details: String
     }
 
     input UserQueryInput {
@@ -221,6 +226,7 @@ const typeDefs = gql`
         # user related queries
         getUser(email: String!): User
         allUsers: [User]
+        getPlayers: [User]
 
         # playfields related queries
         getPlayField(id: ID!): PlayField

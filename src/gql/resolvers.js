@@ -98,6 +98,10 @@ const resolvers = {
       const users = await User.find();
       return users;
     },
+    getPlayers: async () => {
+      const players = await User.find({ role: 'PLAYER' });
+      return players;
+    },
     /* playfield related queries */
     getPlayField: async (parent, args, context) => getPlayField(parent, args, context),
     listPlayFields: async (parent, args, context) => listPlayFields(parent, args, context),

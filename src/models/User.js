@@ -46,6 +46,9 @@ const userSchema = new mongoose.Schema({
   phoneNumber: { type: String },
   password: { type: String },
 
+  mainHand: { type: String },
+  details: { type: String },
+
   /* mongo database relational fields for apollo federation */
   clubId: { type: String, index: true },
 
