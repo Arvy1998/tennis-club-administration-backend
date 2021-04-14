@@ -73,6 +73,20 @@ const resolvers = {
       return playField;
     },
   },
+  Reservation: {
+    async __resolveReference(reference) {
+      const reservation = await Reservation.findOne({ _id: reference.id });
+      return reservation;
+    },
+    user: async (parent) => {
+      const user = await User.findOne({ _id: parent.userId });
+      return user;
+    },
+    playField: async (parent) => {
+      const playField = await PlayField.findOne({ _id: parent.playFieldId });
+      return playField;
+    }
+  },
   Game: {
     firstTeamFirstPlayer: async (parent, args) => {
       const user = await User.findOne({ _id: parent.firstTeamFirstPlayerId });
@@ -121,6 +135,7 @@ const resolvers = {
     updatePlayField: async (parent, args, context) => updatePlayField(parent, args, context),
     deletePlayField: async (parent, args, context) => deletePlayField(parent, args, context),
     /* reservations related mutations */
+    createReservation: async (parent, args, context) => createReservation(parent, args, context),
     /* games related mutations */
     createGame: async (parent, args, context) => createGame(parent, args, context),
     updateGame: async (parent, args, context) => updateGame(parent, args, context),

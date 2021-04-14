@@ -109,12 +109,16 @@ const typeDefs = gql`
     type Reservation {
         id: ID!
         startDateTime: DateTime
-        duration: Int
+        endDateTime: DateTime
         user: User
         isRecurring: Boolean
         recurringDate: DateTime
         recurringPeriod: RecurringPeriod
         recurringEvery: Int
+        playField: PlayField
+        totalCost: Float
+        paid: Boolean
+
         createdAt: DateTime
         updatedAt: DateTime
     }
@@ -200,12 +204,15 @@ const typeDefs = gql`
 
     input ReservationInput {
         startDateTime: DateTime
-        duration: Int
+        endDateTime: DateTime
         userId: String
+        playFieldId: String
         isRecurring: Boolean
         recurringDate: DateTime
         recurringPeriod: RecurringPeriod
         recurringEvery: Int
+        totalCost: Float
+        paid: Boolean
     }
 
     input MatchInput {

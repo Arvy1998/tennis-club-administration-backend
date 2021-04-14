@@ -3,10 +3,11 @@ import mongoose from 'mongoose';
 const reservationSchema = new mongoose.Schema({
   /* YYYY-MM-DD HH:mm:ss */
   startDateTime: { type: String, index: true },
-  /* in minutes */
-  duration: { type: Number },
+  endDateTime: { type: String, index: true },
   /* mongo database relational fields for apollo federation */
   userId: { type: String, index: true },
+  playFieldId: { type: String, index: true },
+
   /* planned rezervation fields */
   isRecurring: { type: Boolean, index: true },
   recurringDate: { type: Date, index: true },
@@ -20,6 +21,10 @@ const reservationSchema = new mongoose.Schema({
       'YEAR',
     ],
   },
+
+  totalCost: { type: Number },
+  paid: { type: Boolean },
+
   recurringEvery: { type: Number },
   /* historization fields */
   createdAt: { type: Date },
