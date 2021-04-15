@@ -23,6 +23,7 @@ import listGames from './resolvers/game/listGames';
 import deleteGame from './resolvers/game/deleteGame';
 import createReservation from './resolvers/reservation/createReservation';
 import getReservationsByPlayfieldId from './resolvers/reservation/getReservationsByPlayfieldId';
+import getReservationsByUserId from './resolvers/reservation/getReservationsByUserId';
 
 require('dotenv').config();
 
@@ -123,6 +124,7 @@ const resolvers = {
     listPlayFields: async (parent, args, context) => listPlayFields(parent, args, context),
     /* reservations related queries */
     getReservationsByPlayfieldId: async (parent, args, context) => getReservationsByPlayfieldId(parent, args, context),
+    getReservationsByUserId: async (parent, args, context) => getReservationsByUserId(parent, args, context),
     /* games related queries */
     getGame: async (parent, args, context) => getGame(parent, args, context),
     listGames: async (parent, args, context) => listGames(parent, args, context),

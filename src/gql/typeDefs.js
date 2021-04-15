@@ -241,6 +241,7 @@ const typeDefs = gql`
 
         # reservations related queries
         getReservationsByPlayfieldId(playFieldId: ID!): [Reservation]
+        getReservationsByUserId(userId: ID!): [Reservation]
 
         # games related queries
         getGame(id: ID!): Game
