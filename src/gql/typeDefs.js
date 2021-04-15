@@ -240,6 +240,7 @@ const typeDefs = gql`
         listPlayFields(playFieldQueryInput: PlayFieldQueryInput): [PlayField]
 
         # reservations related queries
+        getReservationsByPlayfieldId(playFieldId: ID!): [Reservation]
 
         # games related queries
         getGame(id: ID!): Game

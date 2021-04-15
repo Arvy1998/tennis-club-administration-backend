@@ -1,6 +1,6 @@
 import Badge from 'models/Badge';
 import Club from 'models/Club';
-import Reservation from 'models/Reservations';
+import Reservation from 'models/Reservation';
 import Game from 'models/Game';
 import User from 'models/User';
 import PlayField from '../models/PlayField';
@@ -21,6 +21,8 @@ import updateGame from './resolvers/game/updateGame';
 import getGame from './resolvers/game/getGame';
 import listGames from './resolvers/game/listGames';
 import deleteGame from './resolvers/game/deleteGame';
+import createReservation from './resolvers/reservation/createReservation';
+import getReservationsByPlayfieldId from './resolvers/reservation/getReservationsByPlayfieldId';
 
 require('dotenv').config();
 
@@ -120,6 +122,7 @@ const resolvers = {
     getPlayField: async (parent, args, context) => getPlayField(parent, args, context),
     listPlayFields: async (parent, args, context) => listPlayFields(parent, args, context),
     /* reservations related queries */
+    getReservationsByPlayfieldId: async (parent, args, context) => getReservationsByPlayfieldId(parent, args, context),
     /* games related queries */
     getGame: async (parent, args, context) => getGame(parent, args, context),
     listGames: async (parent, args, context) => listGames(parent, args, context),
