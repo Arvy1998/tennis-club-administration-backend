@@ -17,7 +17,13 @@ const createReservation = async (parent, args, { user }) => {
     throw new UserNotAuthorized();
   }
 
-  const newReservation = await Reservation.create(filterNotDefinedFields(reservationToEdit));
+  const newReservation = await Reservation.create(
+    {
+      ...filterNotDefinedFields(reservationToEdit),
+      paid: false,
+      status: 'Active',
+    }
+  );
   return newReservation;
 };
 

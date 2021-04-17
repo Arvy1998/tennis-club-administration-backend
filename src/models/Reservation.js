@@ -23,6 +23,7 @@ const reservationSchema = new mongoose.Schema({
   },
 
   totalCost: { type: Number },
+  status: String,
   paid: { type: Boolean },
 
   recurringEvery: { type: Number },

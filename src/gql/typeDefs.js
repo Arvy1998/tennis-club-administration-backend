@@ -118,6 +118,7 @@ const typeDefs = gql`
         playField: PlayField
         totalCost: Float
         paid: Boolean
+        status: String
 
         createdAt: DateTime
         updatedAt: DateTime
@@ -213,6 +214,7 @@ const typeDefs = gql`
         recurringEvery: Int
         totalCost: Float
         paid: Boolean
+        status: String
     }
 
     input MatchInput {
