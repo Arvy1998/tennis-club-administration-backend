@@ -1,9 +1,9 @@
 import UserNotAuthorized from 'errors/UserNotAuthorized';
 
-import PlayField from 'models/PlayField';
+import Club from 'models/Club';
 import User from 'models/User';
 
-const deletePlayField = async (parent, args, { user }) => {
+const deleteClub = async (parent, args, { user }) => {
   const userForAuthorization = await User.findOne({ email: user.email });
 
   /* only allow deactivating user if it's not another user */
@@ -11,11 +11,11 @@ const deletePlayField = async (parent, args, { user }) => {
     throw new UserNotAuthorized();
   }
 
-  const deletedPlayField = await PlayField.findOneAndDelete({
+  const deletedClub = await Club.findOneAndDelete({
     _id: args.id,
   });
 
-  return deletedPlayField;
+  return deletedClub;
 };
 
-export default deletePlayField;
+export default deleteClub;

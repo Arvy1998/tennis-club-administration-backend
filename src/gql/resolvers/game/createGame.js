@@ -27,38 +27,51 @@ const createGame = async (parent, args, { user }) => {
         }
     });
 
-    let firstTeamFirstPlayerRating;
-    let firstTeamSecondPlayerRating;
-    let secondTeamFirstPlayerRating;
-    let secondTeamSecondPlayerRating;
+    console.log({firstTeamsScore, secondTeamsScore});
+
+    let firstTeamFirstPlayerRating = 0;
+    let firstTeamSecondPlayerRating = 0;
+    let secondTeamFirstPlayerRating = 0;
+    let secondTeamSecondPlayerRating = 0;
 
     let firstTeamFirstPlayer = await User.findOne({ _id: gameToEdit.firstTeamFirstPlayerId });
-    if (!firstTeamFirstPlayer.rating) {
-        firstTeamFirstPlayerRating = 0;
-    } else if (firstTeamFirstPlayer && firstTeamFirstPlayer.rating) {
+    if (firstTeamFirstPlayer && !firstTeamFirstPlayer.rating) {
+        firstTeamFirstPlayerRating = 1;
+    } 
+    if (firstTeamFirstPlayer) {
         firstTeamFirstPlayerRating = firstTeamFirstPlayer.rating + firstTeamsScore;
     }
 
     let firstTeamSecondPlayer = await User.findOne({ _id: gameToEdit.firstTeamSecondPlayerId });
     if (firstTeamSecondPlayer && !firstTeamSecondPlayer.rating) {
-        firstTeamSecondPlayerRating = 0;
-    } else if (firstTeamSecondPlayer && firstTeamSecondPlayer.rating) {
+        firstTeamSecondPlayerRating = 1;
+    } 
+    if (firstTeamSecondPlayer) {
         firstTeamSecondPlayerRating = firstTeamSecondPlayer.rating + firstTeamsScore;
     }
 
     let secondTeamFirstPlayer = await User.findOne({ _id: gameToEdit.secondTeamFirstPlayerId });
-    if (!secondTeamFirstPlayer.rating) {
-        secondTeamFirstPlayerRating = 0;
-    } else if (secondTeamFirstPlayer && secondTeamFirstPlayer.rating) {
-        secondTeamFirstPlayerRating = secondTeamFirstPlayer + secondTeamsScore;
+    if (secondTeamFirstPlayer && !secondTeamFirstPlayer.rating) {
+        secondTeamFirstPlayerRating = 1;
+    } 
+    if (secondTeamFirstPlayer) {
+        secondTeamFirstPlayerRating = secondTeamFirstPlayer.rating + secondTeamsScore;
     }
 
     let secondTeamSecondPlayer = await User.findOne({ _id: gameToEdit.secondTeamSecondPlayerId });
     if (secondTeamSecondPlayer && !secondTeamSecondPlayer.rating) {
-        secondTeamSecondPlayerRating = 0;
-    } else if (secondTeamSecondPlayer && secondTeamSecondPlayer.rating) {
-        secondTeamSecondPlayerRating = secondTeamSecondPlayer + secondTeamsScore;
+        secondTeamSecondPlayerRating = 1;
+    } 
+    if (secondTeamSecondPlayer) {
+        secondTeamSecondPlayerRating = secondTeamSecondPlayer.rating + secondTeamsScore;
     }
+
+    console.log({
+        firstTeamFirstPlayerRating,
+        firstTeamSecondPlayerRating,
+        secondTeamFirstPlayerRating,
+        secondTeamSecondPlayerRating,
+    });
 
     await User.findOneAndUpdate(
         { _id: gameToEdit.firstTeamFirstPlayerId },
@@ -91,7 +104,6 @@ const createGame = async (parent, args, { user }) => {
     gameToEdit.date = new Date();
 
     const newGame = await Game.create(filterNotDefinedFields(gameToEdit));
-    console.log({newGame});
     return newGame;
 };
 

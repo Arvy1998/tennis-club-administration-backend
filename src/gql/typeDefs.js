@@ -82,7 +82,8 @@ const typeDefs = gql`
         description: String
         creator: User
         clubLogo: String
-        createdAt: DateTime
+        users: [User]
+        createdAt: DateTime  
         updatedAt: DateTime
     }
 
@@ -231,6 +232,14 @@ const typeDefs = gql`
         secondTeamSecondPlayerId: ID
     }
 
+    input ClubInput {
+        title: String
+        description: String
+        creatorId: ID
+        clubLogo: String
+        userIds: [ID]
+    }
+
     type Query {
         # user related queries
         getUser(email: String!): User
@@ -248,6 +257,11 @@ const typeDefs = gql`
         # games related queries
         getGame(id: ID!): Game
         listGames: [Game]
+
+        # clubs related queries
+        getClub(id: ID!): Club
+        listClubs: [Club]
+        getClubByCreatorId(creatorId: ID!): Club
     }
 
     type Mutation {
@@ -272,6 +286,11 @@ const typeDefs = gql`
         createGame(gameInput: GameInput!): Game
         updateGame(id: ID!, gameInput: GameInput!): Game
         deleteGame(id: ID!): Game 
+
+        # club related mutations
+        createClub(clubInput: ClubInput!): Club
+        updateClub(id: ID!, clubInput: ClubInput!): Club
+        deleteClub(id: ID!): Club
     }
 `;
 

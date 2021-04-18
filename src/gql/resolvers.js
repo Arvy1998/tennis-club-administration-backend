@@ -26,6 +26,12 @@ import getReservationsByPlayfieldId from './resolvers/reservation/getReservation
 import getReservationsByUserId from './resolvers/reservation/getReservationsByUserId';
 import updateReservation from './resolvers/reservation/updateReservation';
 import deleteReservation from './resolvers/reservation/deleteReservation';
+import getClub from './resolvers/club/getClub';
+import listClubs from './resolvers/club/listClubs';
+import createClub from './resolvers/club/createClub';
+import updateClub from './resolvers/club/updateClub';
+import deleteClub from './resolvers/club/deleteClub';
+import getClubByCreatorId from './resolvers/club/getClubByCreatorId';
 
 require('dotenv').config();
 
@@ -62,7 +68,7 @@ const resolvers = {
     games: async (parent, args) => {
       const games = await Game.find();
 
-      const userGames = games.filter(game => 
+      const userGames = games.filter(game =>
         game.firstTeamFirstPlayerId === parent.id ||
         game.firstTeamSecondPlayerId === parent.id ||
         game.secondTeamFirstPlayerId === parent.id ||
@@ -110,6 +116,18 @@ const resolvers = {
       return user;
     },
   },
+  Club: {
+    users: async (parent, args) => {
+      let users = [];
+      if (parent.userIds) {
+        await Promise.all(parent.userIds.map(async (userId) => {
+          const user = await User.findOne({ _id: userId });
+          users.push(user);
+        }));
+      }
+      return users;
+    },
+  },
   Query: {
     /* user related queries */
     getUser: async (parent, args, context) => getUser(parent, args, context),
@@ -130,6 +148,10 @@ const resolvers = {
     /* games related queries */
     getGame: async (parent, args, context) => getGame(parent, args, context),
     listGames: async (parent, args, context) => listGames(parent, args, context),
+    /* clubs related queries */
+    getClub: async (parent, args, context) => getClub(parent, args, context),
+    listClubs: async (parent, args, context) => listClubs(parent, args, context),
+    getClubByCreatorId: async (parent, args, context) => getClubByCreatorId(parent, args, context),
   },
   Mutation: {
     /* user related mutations */
@@ -149,6 +171,10 @@ const resolvers = {
     createGame: async (parent, args, context) => createGame(parent, args, context),
     updateGame: async (parent, args, context) => updateGame(parent, args, context),
     deleteGame: async (parent, args, context) => deleteGame(parent, args, context),
+    /* clubs related mutations */
+    createClub: async (parent, args, context) => createClub(parent, args, context),
+    updateClub: async (parent, args, context) => updateClub(parent, args, context),
+    deleteClub: async (parent, args, context) => deleteClub(parent, args, context),
   },
 };
 

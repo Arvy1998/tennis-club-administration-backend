@@ -52,10 +52,10 @@ const userSchema = new mongoose.Schema({
   /* mongo database relational fields for apollo federation */
   clubId: { type: String, index: true },
 
-  userProfilePhoto: String,
+  userProfilePhoto: { type: String },
 
   /* used for achievements and level */
-  rating: Number,
+  rating: { type: Number },
 
   /* historization fields */
   createdAt: { type: Date },

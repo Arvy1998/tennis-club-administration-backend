@@ -5,6 +5,8 @@ const clubSchema = new mongoose.Schema({
   description: { type: String },
   /* mongo database relational fields for apollo federation */
   creatorId: { type: String, index: true },
+  userIds: { type: [String], index: true, default: [] },
+
   clubLogo: String,
   /* historization fields */
   createdAt: { type: Date },
