@@ -12,7 +12,7 @@ const signToken = async (user) => {
   };
 
   return new Promise((resolve, reject) => {
-    jsonwebtoken.sign(payload, privatekey, { expiresIn: '1h' }, (error, token) => {
+    jsonwebtoken.sign(payload, privatekey, { expiresIn: '24h' }, (error, token) => {
       if (error) reject(error);
       else resolve(token);
     });
