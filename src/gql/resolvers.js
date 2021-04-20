@@ -32,6 +32,7 @@ import createClub from './resolvers/club/createClub';
 import updateClub from './resolvers/club/updateClub';
 import deleteClub from './resolvers/club/deleteClub';
 import getClubByCreatorId from './resolvers/club/getClubByCreatorId';
+import editUserById from './resolvers/user/editUserById';
 
 require('dotenv').config();
 
@@ -133,11 +134,13 @@ const resolvers = {
     getUser: async (parent, args, context) => getUser(parent, args, context),
     allUsers: async () => {
       const users = await User.find();
-      return users;
+      const filtered = users.filter(user => user.status === 'ACTIVE');
+      return filtered;
     },
     getPlayers: async () => {
       const players = await User.find({ role: 'PLAYER' });
-      return players;
+      const filtered = players.filter(user => user.status === 'ACTIVE');
+      return filtered;
     },
     /* playfield related queries */
     getPlayField: async (parent, args, context) => getPlayField(parent, args, context),
@@ -158,6 +161,7 @@ const resolvers = {
     loginUser: async (parent, args) => loginUser(parent, args),
     registerUser: async (parent, args) => registerUser(parent, args),
     editUser: async (parent, args, context) => editUser(parent, args, context),
+    editUserById: async (parent, args, context) => editUserById(parent, args, context),
     deleteUser: async (parent, args, context) => deleteUser(parent, args, context),
     /* playfield related mutations */
     createPlayField: async (parent, args, context) => createPlayField(parent, args, context),

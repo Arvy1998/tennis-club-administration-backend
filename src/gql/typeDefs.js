@@ -41,6 +41,11 @@ const typeDefs = gql`
         LEVEL_7_0
     }
 
+    enum UserStatus {
+        ACTIVE
+        BLOCKED
+    }
+
     type User {
         id: ID!
         firstName: String
@@ -65,6 +70,7 @@ const typeDefs = gql`
         mainHand: String
         details: String
         rating: Int
+        status: UserStatus
     }
 
     type Badge {
@@ -168,6 +174,7 @@ const typeDefs = gql`
         userProfilePhoto: String
         mainHand: String
         details: String
+        status: UserStatus
     }
 
     input UserQueryInput {
@@ -270,6 +277,7 @@ const typeDefs = gql`
         registerUser(userInput: UserInput!): User
 
         editUser(email: String!, userInput: UserInput!): User
+        editUserById(id: ID!, userInput: UserInput!): User
         deleteUser(email: String!): User
 
         # playfield related mutations

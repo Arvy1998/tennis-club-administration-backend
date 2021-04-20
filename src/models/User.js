@@ -54,6 +54,15 @@ const userSchema = new mongoose.Schema({
 
   userProfilePhoto: { type: String },
 
+  status: { 
+    type: String, 
+    default: 'ACTIVE',
+    enum: [
+      'ACTIVE',
+      'BLOCKED',
+    ],
+  },
+
   /* used for achievements and level */
   rating: { type: Number },
 
