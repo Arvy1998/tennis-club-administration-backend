@@ -13,7 +13,6 @@ const playFieldSchema = new mongoose.Schema({
 
   additionalInformation: String,
   webpage: String,
-  rating: Number,
 
   playFieldPhoto: String,
 
