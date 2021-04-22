@@ -20,6 +20,18 @@ const updateClub = async (parent, args, { user }) => {
     { new: true },
   );
 
+  updatedClub.userIds.map(async (userId) => {
+    const userToCheck = await User.findById(userId);
+    /* check if user has made into club */
+    if (!userToCheck.badgeIds.includes('6081b057093f9e1848684a8d')) {
+      await User.findOneAndUpdate(
+        { _id: userId },
+        { badgeIds: [...userToCheck.badgeIds, '6081b057093f9e1848684a8d'] },
+        { new: true },
+      );
+    }
+  })
+
   return updatedClub;
 };
 

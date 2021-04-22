@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 const badgeSchema = new mongoose.Schema({
   title: { type: String },
   description: { type: String },
-  badgeIcon: String,
   /* historization fields */
   createdAt: { type: Date },
   updatedAt: { type: Date },

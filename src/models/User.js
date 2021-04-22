@@ -66,6 +66,8 @@ const userSchema = new mongoose.Schema({
   /* used for achievements and level */
   rating: { type: Number },
 
+  badgeIds: { type: [String], default: [] },
+
   /* historization fields */
   createdAt: { type: Date },
   updatedAt: { type: Date },

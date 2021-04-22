@@ -24,6 +24,16 @@ const createReservation = async (parent, args, { user }) => {
       status: 'Active',
     }
   );
+
+  /* check if this is first reservation for the user, add reservation badge ID */
+  if (!userForAuthorization.badgeIds.includes('6081b057093f9e1848684a91')) {
+    await User.findOneAndUpdate(
+      { email: user.email },
+      { badgeIds: [...userForAuthorization.badgeIds, '6081b057093f9e1848684a91'] },
+      { new: true },
+    );
+  }
+
   return newReservation;
 };
 

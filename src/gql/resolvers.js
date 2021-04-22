@@ -3,7 +3,7 @@ import Club from 'models/Club';
 import Reservation from 'models/Reservation';
 import Game from 'models/Game';
 import User from 'models/User';
-import PlayField from '../models/PlayField';
+import PlayField from 'models/PlayField';
 
 /* authorization and user, resolver operations */
 import loginUser from './resolvers/authorization/loginUser';
@@ -33,6 +33,9 @@ import updateClub from './resolvers/club/updateClub';
 import deleteClub from './resolvers/club/deleteClub';
 import getClubByCreatorId from './resolvers/club/getClubByCreatorId';
 import editUserById from './resolvers/user/editUserById';
+import listBadges from './resolvers/badge/listBadges';
+
+import userTopBadgeCriterias from '../utils/userTopBadgeCriterias';
 
 require('dotenv').config();
 
@@ -137,9 +140,11 @@ const resolvers = {
       const filtered = users.filter(user => user.status === 'ACTIVE');
       return filtered;
     },
-    getPlayers: async () => {
+    getPlayers: async (parent, args, { user }) => {
       const players = await User.find({ role: 'PLAYER' });
       const filtered = players.filter(user => user.status === 'ACTIVE');
+
+      await userTopBadgeCriterias(filtered, user);
       return filtered;
     },
     /* playfield related queries */
@@ -155,6 +160,8 @@ const resolvers = {
     getClub: async (parent, args, context) => getClub(parent, args, context),
     listClubs: async (parent, args, context) => listClubs(parent, args, context),
     getClubByCreatorId: async (parent, args, context) => getClubByCreatorId(parent, args, context),
+    /* badges related queries */
+    listBadges: async (parent, args, context) => listBadges(parent, args, context),
   },
   Mutation: {
     /* user related mutations */

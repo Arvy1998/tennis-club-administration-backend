@@ -77,7 +77,6 @@ const typeDefs = gql`
         id: ID!
         title: String
         description: String
-        badgeIcon: String
         createdAt: DateTime
         updatedAt: DateTime
     }
@@ -266,6 +265,9 @@ const typeDefs = gql`
         getClub(id: ID!): Club
         listClubs: [Club]
         getClubByCreatorId(creatorId: ID!): Club
+
+        # badges related queries
+        listBadges: [Badge]
     }
 
     type Mutation {
