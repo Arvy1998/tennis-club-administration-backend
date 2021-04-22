@@ -9,10 +9,10 @@ const gameSchema = new mongoose.Schema({
   }],
   
   /* mongo database relational fields for apollo federation */
-  firstTeamFirstPlayerId: String,
-  firstTeamSecondPlayerId: String,
-  secondTeamFirstPlayerId: String,
-  secondTeamSecondPlayerId: String,
+  firstTeamFirstPlayerId: { type: String, index: true },
+  firstTeamSecondPlayerId: { type: String, index: true },
+  secondTeamFirstPlayerId: { type: String, index: true },
+  secondTeamSecondPlayerId: { type: String, index: true },
 
   /* historization fields */
   createdAt: { type: Date },

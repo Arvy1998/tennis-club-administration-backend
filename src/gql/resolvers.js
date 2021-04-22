@@ -5,6 +5,8 @@ import Game from 'models/Game';
 import User from 'models/User';
 import PlayField from 'models/PlayField';
 
+import userTopBadgeCriterias from '../utils/userTopBadgeCriterias';
+
 /* authorization and user, resolver operations */
 import loginUser from './resolvers/authorization/loginUser';
 import registerUser from './resolvers/authorization/registerUser';
@@ -34,8 +36,11 @@ import deleteClub from './resolvers/club/deleteClub';
 import getClubByCreatorId from './resolvers/club/getClubByCreatorId';
 import editUserById from './resolvers/user/editUserById';
 import listBadges from './resolvers/badge/listBadges';
-
-import userTopBadgeCriterias from '../utils/userTopBadgeCriterias';
+import createNews from './resolvers/news/createNews';
+import updateNews from './resolvers/news/updateNews';
+import deleteNews from './resolvers/news/deleteNews';
+import getNews from './resolvers/news/getNews';
+import listNews from './resolvers/news/listNews';
 
 require('dotenv').config();
 
@@ -69,7 +74,7 @@ const resolvers = {
 
       return reservations;
     },
-    games: async (parent, args) => {
+    games: async (parent) => {
       const games = await Game.find();
 
       const userGames = games.filter(game =>
@@ -103,25 +108,25 @@ const resolvers = {
     }
   },
   Game: {
-    firstTeamFirstPlayer: async (parent, args) => {
+    firstTeamFirstPlayer: async (parent) => {
       const user = await User.findOne({ _id: parent.firstTeamFirstPlayerId });
       return user;
     },
-    firstTeamSecondPlayer: async (parent, args) => {
+    firstTeamSecondPlayer: async (parent) => {
       const user = await User.findOne({ _id: parent.firstTeamSecondPlayerId });
       return user;
     },
-    secondTeamFirstPlayer: async (parent, args) => {
+    secondTeamFirstPlayer: async (parent) => {
       const user = await User.findOne({ _id: parent.secondTeamFirstPlayerId });
       return user;
     },
-    secondTeamSecondPlayer: async (parent, args) => {
+    secondTeamSecondPlayer: async (parent) => {
       const user = await User.findOne({ _id: parent.secondTeamSecondPlayerId });
       return user;
     },
   },
   Club: {
-    users: async (parent, args) => {
+    users: async (parent) => {
       let users = [];
       if (parent.userIds) {
         await Promise.all(parent.userIds.map(async (userId) => {
@@ -130,6 +135,20 @@ const resolvers = {
         }));
       }
       return users;
+    },
+  },
+  News: {
+    firstClubPlaying: async (parent) => {
+      const club = await Club.findOne({ _id: parent.firstClubPlayingId });
+      return club;
+    },
+    secondClubPlaying: async (parent) => {
+      const club = await Club.findOne({ _id: parent.secondClubPlayingId });
+      return club;
+    },
+    playField: async (parent) => {
+      const playField = await PlayField.findOne({ _id: parent.playFieldId });
+      return playField;
     },
   },
   Query: {
@@ -162,6 +181,9 @@ const resolvers = {
     getClubByCreatorId: async (parent, args, context) => getClubByCreatorId(parent, args, context),
     /* badges related queries */
     listBadges: async (parent, args, context) => listBadges(parent, args, context),
+    /* news related queries */
+    getNews: async (parent, args, context) => getNews(parent, args, context),
+    listNews: async (parent, args, context) => listNews(parent, args, context),
   },
   Mutation: {
     /* user related mutations */
@@ -186,6 +208,10 @@ const resolvers = {
     createClub: async (parent, args, context) => createClub(parent, args, context),
     updateClub: async (parent, args, context) => updateClub(parent, args, context),
     deleteClub: async (parent, args, context) => deleteClub(parent, args, context),
+    /* news related mutations */
+    createNews: async (parent, args, context) => createNews(parent, args, context),
+    updateNews: async (parent, args, context) => updateNews(parent, args, context),
+    deleteNews: async (parent, args, context) => deleteNews(parent, args, context),
   },
 };
 

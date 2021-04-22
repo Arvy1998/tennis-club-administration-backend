@@ -150,6 +150,16 @@ const typeDefs = gql`
         updatedAt: DateTime
     }
 
+    type News {
+        id: ID!
+        title: String
+        description: String
+        firstClubPlaying: Club
+        secondClubPlaying: Club
+        date: DateTime
+        playField: PlayField
+    }
+
     input UserInput {
         id: ID
         firstName: String
@@ -243,6 +253,15 @@ const typeDefs = gql`
         userIds: [ID]
     }
 
+    input NewsInput {
+        title: String
+        description: String
+        firstClubPlayingId: ID
+        secondClubPlayingId: ID
+        date: DateTime
+        playFieldId: ID
+    }
+
     type Query {
         # user related queries
         getUser(email: String!): User
@@ -268,6 +287,10 @@ const typeDefs = gql`
 
         # badges related queries
         listBadges: [Badge]
+
+        # news related queries
+        getNews(id: ID!): News
+        listNews: [News]
     }
 
     type Mutation {
@@ -298,6 +321,11 @@ const typeDefs = gql`
         createClub(clubInput: ClubInput!): Club
         updateClub(id: ID!, clubInput: ClubInput!): Club
         deleteClub(id: ID!): Club
+
+        # news related mutations
+        createNews(newsInput: NewsInput!): News
+        updateNews(id: ID!, newsInput: NewsInput!): News
+        deleteNews(id: ID!): News
     }
 `;
 

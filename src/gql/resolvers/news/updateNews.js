@@ -1,25 +1,25 @@
 import UserNotAuthorized from 'errors/UserNotAuthorized';
 
-import Game from 'models/Game';
+import News from 'models/News';
 import User from 'models/User';
 
 import filterNotDefinedFields from 'utils/filterNotDefinedFields';
 
-const updateGame = async (parent, args, { user }) => {
-    let gameToEdit = args.gameInput;
+const updateNews = async (parent, args, { user }) => {
+    let newsToEdit = args.newsInput;
     const userForAuthorization = await User.findOne({ email: user.email });
 
-    /* only allow creating game if it's not another user */
+    /* only allow creating news if it's not another user */
     if (user.userId !== userForAuthorization._id.toString()) {
         throw new UserNotAuthorized();
     }
 
-    const updatedGame = await Game.findOneAndUpdate(
+    const updatedNews = await News.findOneAndUpdate(
         { _id: args.id },
-        filterNotDefinedFields(gameToEdit),
+        filterNotDefinedFields(newsToEdit),
         { new: true },
     );
-    return updatedGame;
+    return updatedNews;
 };
 
-export default updateGame;
+export default updateNews;

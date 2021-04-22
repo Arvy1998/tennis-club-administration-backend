@@ -1,21 +1,18 @@
 import UserNotAuthorized from 'errors/UserNotAuthorized';
 
-import Game from 'models/Game';
+import News from 'models/News';
 import User from 'models/User';
 
-const deleteGame = async (parent, args, { user }) => {
+const getNews = async (parent, args, { user }) => {
   const userForAuthorization = await User.findOne({ email: user.email });
 
-  /* only allow deleting game if it's not another user */
+  /* only allow viewing news information if it's not another user */
   if (user.userId !== userForAuthorization._id.toString()) {
     throw new UserNotAuthorized();
   }
 
-  const deletedGame = await Game.findOneAndDelete({
-    _id: args.id,
-  });
-
-  return deletedGame;
+  const newsToReturn = await News.findOne({ _id: args.id });
+  return newsToReturn;
 };
 
-export default deleteGame;
+export default getNews;
