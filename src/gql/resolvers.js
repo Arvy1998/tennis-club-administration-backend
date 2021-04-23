@@ -166,6 +166,11 @@ const resolvers = {
       await userTopBadgeCriterias(filtered, user);
       return filtered;
     },
+    getUserById: async (parent, args) => {
+      const { id } = args;
+      const user = await User.findById(id);
+      return user;
+    },
     /* playfield related queries */
     getPlayField: async (parent, args, context) => getPlayField(parent, args, context),
     listPlayFields: async (parent, args, context) => listPlayFields(parent, args, context),

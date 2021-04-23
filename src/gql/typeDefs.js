@@ -267,6 +267,7 @@ const typeDefs = gql`
         getUser(email: String!): User
         allUsers: [User]
         getPlayers: [User]
+        getUserById(id: ID!): User
 
         # playfields related queries
         getPlayField(id: ID!): PlayField
