@@ -1,7 +1,6 @@
 import Stripe from 'stripe';
 
 import UserNotAuthorized from 'errors/UserNotAuthorized';
-import PaymentFailed from 'errors/PaymentFailed';
 
 import Reservation from 'models/Reservation';
 import User from 'models/User';
@@ -9,6 +8,12 @@ import User from 'models/User';
 const doPayment = async (parent, args, { user }) => {
     const paymentData = args.paymentInput;
     const userForAuthorization = await User.findOne({ email: user.email });
+
+    const updatedReservation = await Reservation.findOneAndUpdate(
+        { _id: args.reservationId },
+        { paid: true },
+        { new: true },
+    );
 
     const stripe = new Stripe(process.env.STRIPE_API);
 
@@ -39,15 +44,9 @@ const doPayment = async (parent, args, { user }) => {
         await stripe.invoices.create({
             collection_method: 'send_invoice',
             customer: customerInvoice.customer,
-            due_date: new Date(),
+            due_date: '1713985258',
         });
     }
-
-    const updatedReservation = await Reservation.findOneAndUpdate(
-        { _id: args.reservationId },
-        { paid: true },
-        { new: true },
-    );
 
     return updatedReservation;
 }
