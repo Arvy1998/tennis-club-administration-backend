@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 const typeDefs = gql`
     scalar DateTime
+    scalar IBAN
 
     enum UserRole {
         PLAYER
@@ -146,6 +147,9 @@ const typeDefs = gql`
 
         playFieldPhoto: String
 
+        paymentRecipient: String
+        paymentIBAN: IBAN
+
         createdAt: DateTime
         updatedAt: DateTime
     }
@@ -207,6 +211,8 @@ const typeDefs = gql`
         webpage: String
         playFieldPhoto: String
         city: String
+        paymentRecipient: String
+        paymentIBAN: IBAN
     }
 
     input PlayFieldQueryInput {

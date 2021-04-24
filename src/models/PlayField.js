@@ -16,6 +16,9 @@ const playFieldSchema = new mongoose.Schema({
 
   playFieldPhoto: String,
 
+  paymentRecipient: String,
+  paymentIBAN: String,
+
   /* historization fields */
   createdAt: { type: Date },
   updatedAt: { type: Date },
