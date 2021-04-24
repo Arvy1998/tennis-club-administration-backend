@@ -171,6 +171,10 @@ const resolvers = {
       const user = await User.findById(id);
       return user;
     },
+    listReservations: async () => {
+      const reservations = await Reservation.find();
+      return reservations;
+    },
     /* playfield related queries */
     getPlayField: async (parent, args, context) => getPlayField(parent, args, context),
     listPlayFields: async (parent, args, context) => listPlayFields(parent, args, context),
