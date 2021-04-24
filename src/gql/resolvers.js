@@ -41,6 +41,7 @@ import updateNews from './resolvers/news/updateNews';
 import deleteNews from './resolvers/news/deleteNews';
 import getNews from './resolvers/news/getNews';
 import listNews from './resolvers/news/listNews';
+import doPayment from './resolvers/payment/doPayment';
 
 require('dotenv').config();
 
@@ -221,6 +222,8 @@ const resolvers = {
     createNews: async (parent, args, context) => createNews(parent, args, context),
     updateNews: async (parent, args, context) => updateNews(parent, args, context),
     deleteNews: async (parent, args, context) => deleteNews(parent, args, context),
+    /* payments mutation */
+    doPayment: async (parent, args, context) => doPayment(parent, args, context),
   },
 };
 

@@ -268,6 +268,13 @@ const typeDefs = gql`
         playFieldId: ID
     }
 
+    input PaymentInput {
+        IBAN: String
+        CVC: Int
+        YYMM: String
+        totalCost: Float
+    }
+
     type Query {
         # user related queries
         getUser(email: String!): User
@@ -334,6 +341,9 @@ const typeDefs = gql`
         createNews(newsInput: NewsInput!): News
         updateNews(id: ID!, newsInput: NewsInput!): News
         deleteNews(id: ID!): News
+        
+        # payment mutation
+        doPayment(reservationId: ID!, paymentInput: PaymentInput!): Reservation
     }
 `;
 

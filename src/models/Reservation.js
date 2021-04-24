@@ -24,7 +24,7 @@ const reservationSchema = new mongoose.Schema({
 
   totalCost: { type: Number },
   status: String,
-  paid: { type: Boolean },
+  paid: { type: Boolean, default: false },
 
   recurringEvery: { type: Number },
   /* historization fields */
