@@ -8,25 +8,10 @@ const reservationSchema = new mongoose.Schema({
   userId: { type: String, index: true },
   playFieldId: { type: String, index: true },
 
-  /* planned rezervation fields */
-  isRecurring: { type: Boolean, index: true },
-  recurringDate: { type: Date, index: true },
-  recurringPeriod: {
-    type: Number,
-    index: true,
-    enum: [
-      'DAY',
-      'WEEK',
-      'MONTH',
-      'YEAR',
-    ],
-  },
-
   totalCost: { type: Number },
   status: String,
   paid: { type: Boolean, default: false },
 
-  recurringEvery: { type: Number },
   /* historization fields */
   createdAt: { type: Date },
   updatedAt: { type: Date },
