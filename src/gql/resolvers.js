@@ -193,7 +193,7 @@ const resolvers = {
     listBadges: async (parent, args, context) => listBadges(parent, args, context),
     /* news related queries */
     getNews: async (parent, args, context) => getNews(parent, args, context),
-    listNews: async (parent, args, context) => listNews(parent, args, context),
+    listNews: async () => listNews(),
   },
   Mutation: {
     /* user related mutations */
