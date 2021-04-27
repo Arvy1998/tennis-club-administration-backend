@@ -13,7 +13,7 @@ const editUserById = async (parent, args, { user }) => {
     throw new UserNotAuthorized();
   }
 
-  if (user.role !== 'ADMIN') {
+  if (userForAuthorization.role !== 'ADMIN') {
     throw new UserNotAuthorized();
   }
 

@@ -157,8 +157,7 @@ const resolvers = {
     getUser: async (parent, args, context) => getUser(parent, args, context),
     allUsers: async () => {
       const users = await User.find();
-      const filtered = users.filter(user => user.status === 'ACTIVE');
-      return filtered;
+      return users;
     },
     getPlayers: async (parent, args, { user }) => {
       const players = await User.find({ role: 'PLAYER' });
